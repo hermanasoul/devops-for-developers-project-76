@@ -1,0 +1,30 @@
+---
+- hosts: all
+  gather_facts: no
+  tasks:
+    - name: Install Python3, pip, six, and apt
+      raw: |
+        apt-get update
+        apt-get install -y python3 python3-pip python3-six python3-apt
+      become: yes
+      changed_when: false
+
+    - name: Install Docker using official script
+      raw: curl -fsSL https://get.docker.com -o get-docker.sh && sh get-docker.sh
+      become: yes
+      changed_when: false
+
+    - name: Add ubuntu user to docker group
+      raw: usermod -aG docker ubuntu
+      become: yes
+      changed_when: false
+
+    - name: Ensure docker service is started and enabled
+      raw: systemctl enable docker && systemctl start docker
+      become: yes
+      changed_when: false
+
+    - name: Install docker Python module via apt
+      raw: apt-get install -y python3-docker
+      become: yes
+      changed_when: false

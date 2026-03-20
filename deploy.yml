@@ -1,0 +1,42 @@
+---
+- name: Deploy application
+  hosts: webservers
+  become: yes
+  vars:
+    # Если переменные не будут найдены в group_vars, можно определить здесь
+    # но мы их берем из group_vars/all.yml
+    container_name: myapp
+
+  tasks:
+    - name: Ensure docker is installed and running
+      ansible.builtin.service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Pull latest image
+      community.docker.docker_image:
+        name: "{{ docker_image }}"
+        source: pull
+
+    - name: Stop and remove old container if exists
+      community.docker.docker_container:
+        name: "{{ container_name }}"
+        state: absent
+        force_kill: yes
+
+    - name: Run new container
+      community.docker.docker_container:
+        name: "{{ container_name }}"
+        image: "{{ docker_image }}"
+        state: started
+        restart_policy: always
+        ports:
+          - "80:3000"
+        env:
+          PORT: "3000"
+          DB_HOST: "{{ db_host }}"
+          DB_PORT: "{{ db_port }}"
+          DB_USER: "{{ db_user }}"
+          DB_PASSWORD: "{{ db_password }}"
+          DB_NAME: "{{ db_name }}"

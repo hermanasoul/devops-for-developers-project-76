@@ -1,0 +1,10 @@
+---
+# Переменные для подключения к PostgreSQL
+db_host: "c-c9qganct6ib929heotcf.rw.mdb.yandexcloud.net"
+db_port: "6432"
+db_user: "appuser"
+db_password: "CYkKBf7GW-yawgx"
+db_name: "appdb"
+
+# Docker образ
+docker_image: "hermanasoul/devops-app:latest"
