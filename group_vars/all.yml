@@ -8,3 +8,8 @@ db_name: "appdb"
 
 # Docker образ
 docker_image: "hermanasoul/devops-app:latest"
+
+redmine_port: 8080
+redmine_db_name: redmine
+redmine_db_user: redmine
+redmine_db_password: "fwAduA4se-QaAqS"   # придумайте надёжный пароль

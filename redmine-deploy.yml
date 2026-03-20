@@ -1,0 +1,43 @@
+---
+- name: Deploy Redmine
+  hosts: webservers
+  become: yes
+  vars:
+    container_name: redmine
+    data_dir: /opt/redmine
+
+  tasks:
+    - name: Ensure data directory exists
+      file:
+        path: "{{ data_dir }}"
+        state: directory
+        owner: ubuntu
+        group: ubuntu
+        mode: 0755
+
+    - name: Create env file from template
+      template:
+        src: redmine.env.j2
+        dest: "{{ data_dir }}/.env"
+        owner: ubuntu
+        group: ubuntu
+        mode: 0644
+
+    - name: Stop and remove existing Redmine container if exists
+      community.docker.docker_container:
+        name: "{{ container_name }}"
+        state: absent
+        force_kill: yes
+
+    - name: Run Redmine container
+      community.docker.docker_container:
+        name: "{{ container_name }}"
+        image: redmine:5.1-alpine
+        state: started
+        restart_policy: always
+        ports:
+          - "{{ redmine_port }}:3000"
+        volumes:
+          - "{{ data_dir }}/files:/usr/src/redmine/files"
+          - "{{ data_dir }}/public:/usr/src/redmine/public"
+        env_file: "{{ data_dir }}/.env"
