@@ -3,8 +3,6 @@
   hosts: webservers
   become: yes
   vars:
-    # Если переменные не будут найдены в group_vars, можно определить здесь
-    # но мы их берем из group_vars/all.yml
     container_name: myapp
 
   tasks:
