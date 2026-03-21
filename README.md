@@ -69,14 +69,55 @@ make edit-vault
 Для установки агента Datadog и настройки HTTP-проверки выполните:
 ```bash
 make monitor
-Эта команда:
 ```
+Эта команда:
+
 Устанавливает зависимости Ansible.
 Устанавливает коллекцию datadog.dd.
 Запускает плейбук monitoring.yml, который:
 Устанавливает Datadog Agent на всех серверах группы webservers.
 Добавляет конфигурацию HTTP-проверки для Redmine (/etc/datadog-agent/conf.d/http_check.d/redmine.yaml).
 Перезапускает агент.
+
+## Мониторинг
+
+Для мониторинга используется Datadog. Агент установлен на всех серверах группы `webservers`. Настроена HTTP-проверка для Redmine (порт 8080). Данные отправляются в Datadog, где можно отслеживать доступность и время ответа приложения.
+
+### Переменные
+
+- `vault_datadog_api_key` – зашифрованный API-ключ Datadog (хранится в `group_vars/webservers/vault.yml`).
+
+### Запуск
+
+```bash
+make monitor
+```
+
+После установки агента проверьте в Datadog раздел Infrastructure → Infrastructure List. Серверы должны появиться. HTTP-проверка Redmine будет доступна в разделе Monitors или в Integrations → HTTP Check.
+
+## 📄 Файл `.gitignore`
+
+```gitignore
+# Ansible
+*.retry
+vault-pass.txt
+
+# Python
+__pycache__/
+*.pyc
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Temporary files
+*.tmp
+*.swp
+```
 
 ### Проверка
 После выполнения в интерфейсе Datadog (раздел Infrastructure) появятся ваши серверы. В разделе Monitors → HTTP Check можно увидеть статус проверки Redmine.
