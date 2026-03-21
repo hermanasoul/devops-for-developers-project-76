@@ -39,5 +39,4 @@
           - "{{ redmine_port }}:3000"
         volumes:
           - "{{ data_dir }}/files:/usr/src/redmine/files"
-          - "{{ data_dir }}/public:/usr/src/redmine/public"
         env_file: "{{ data_dir }}/.env"

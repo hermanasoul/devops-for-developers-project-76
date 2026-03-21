@@ -1,6 +1,8 @@
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/hermanasoul/devops-for-developers-project-76/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/hermanasoul/devops-for-developers-project-76/actions)
 
+[![Deploy](https://github.com/hermanasoul/devops-for-developers-project-76/actions/workflows/deploy.yml/badge.svg)](https://github.com/hermanasoul/devops-for-developers-project-76/actions/workflows/deploy.yml)
+
 ## Управление конфигурацией
 
 Для автоматической настройки серверов используется Ansible. Перед запуском убедитесь, что у вас установлен Ansible и настроен SSH-доступ к серверам.
@@ -39,3 +41,14 @@ make deploy
 ```bash
 ansible-playbook -i inventory.ini deploy.yml
 ```
+
+Развёрнутое приложение Redmine доступно по адресу: [https://mydevopsproject.ru/redmine](https://mydevopsproject.ru/redmine)
+
+## Управление секретами
+
+Секретные данные (пароль БД Redmine) хранятся в зашифрованном файле `group_vars/webservers/vault.yml`. Для редактирования используйте команду:
+
+```bash
+make edit-vault
+```
+

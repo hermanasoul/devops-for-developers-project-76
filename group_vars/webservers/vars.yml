@@ -1,0 +1,12 @@
+---
+# Переменные для Redmine (несекретные)
+redmine_port: 8080
+redmine_db_name: redmine
+redmine_db_user: redmine
+redmine_db_host: "{{ db_host }}"          # ссылается на переменную из all.yml
+redmine_db_port: "{{ db_port }}"
+# Пароль будет взят из зашифрованного файла
+redmine_db_password: "{{ vault_redmine_db_password }}"
+# Datadog
+datadog_api_key: "{{ vault_datadog_api_key }}"
+datadog_site: "datadoghq.eu"

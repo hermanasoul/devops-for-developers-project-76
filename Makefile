@@ -14,3 +14,13 @@ prepare: install-deps
 deploy: install-deps
 	@echo "Deploying application..."
 	ansible-playbook -i inventory.ini deploy.yml
+deploy-redmine: install-deps
+	@echo "Deploying Redmine..."
+	ansible-playbook -i inventory.ini redmine-deploy.yml --ask-vault-pass
+
+.PHONY: edit-vault
+
+edit-vault:
+	@echo "Editing vault file..."
+	ansible-vault edit group_vars/webservers/vault.yml
+	
