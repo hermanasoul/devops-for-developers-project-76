@@ -1,0 +1,6 @@
+*.retry
+*.pyc
+*.swp
+.vscode/
+__pycache__/
+vault-pass.txt
