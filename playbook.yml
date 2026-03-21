@@ -19,8 +19,8 @@
       become: yes
       changed_when: false
 
-    - name: Ensure docker service is started and enabled
-      raw: systemctl enable docker && systemctl start docker
+    - name: Ensure docker service is started
+      raw: service docker start || true
       become: yes
       changed_when: false
 
